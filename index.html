@@ -1,14 +1,412 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chichicastenango | Exposición UMG</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'umg-blue': '#003366',
+            'umg-sky': '#00c1ff',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            lovelo: ['Montserrat', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .font-lovelo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* Splash Screen Estricto */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    .splash-text {
+      opacity: 0;
+      transition: opacity 0.6s ease-in-out;
+    }
+
+    .splash-logo-img {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .show {
+      opacity: 1 !important;
+    }
+
+    .show-logo {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+    }
+
+    /* Pendones: Efecto sobresaliente con profundidad */
+    .pendon-container {
+      filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.15));
+      transform: translateY(15px);
+      /* Ajuste para que "cuelguen" del header */
+    }
+
+    /* Glassmorphism Header */
+    .glass-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* Hero Image Fix */
+    .hero-img {
+      filter: brightness(0.6) contrast(1.1);
+    }
+  </style>
 </head>
-<body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+<body class="bg-white text-gray-900 overflow-hidden">
+
+  <div id="splash-screen">
+    <div class="relative flex flex-col items-center">
+      <h1 id="splash-group" class="splash-text font-lovelo text-[2.5rem] md:text-5xl text-umg-blue text-center">
+        GRUPO 5 <br>
+        <span class="text-2xl">sección C</span>
+      </h1>
+    </div>
+  </div>
+
+  <header class="fixed w-full z-50 glass-header border-b border-gray-100 shadow-sm h-20 md:h-24">
+    <div class="max-w-7xl mx-auto h-full px-6 flex justify-between items-center relative">
+
+      <div class="flex items-center">
+        <img src="https://umg.edu.gt/img/Umg.png" alt="UMG Logo" class="h-[3.5rem] md:h-[4.7rem]">
+      </div>
+
+      <nav class="hidden lg:flex items-center space-x-8 mr-40">
+        <a href="#inicio" class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Inicio</a>
+        <a href="#mercado" class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Mercado</a>
+        <a href="#cultura" class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Cultura</a>
+        <a href="TU_LINK" target="_blank"
+          class="bg-umg-blue text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-umg-sky transition">Trivia</a>
+      </nav>
+
+      <button id="btn-mobile" class="relative right-[3rem] lg:hidden text-umg-blue text-2xl p-2 z-50">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="pendon-container absolute right-[0.5rem] md:right-10">
+        <div class="relative w-20 h-28 md:w-32 md:h-44 p-2">
+          <img id="p1" src="https://umg.edu.gt/img/60_Umg.png"
+            class="absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 opacity-100"
+            alt="60 años UMG">
+          <img id="p2" src="https://umg.edu.gt/img/60.png"
+            class="absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 opacity-0"
+            alt="60 años">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu"
+    class="fixed inset-0 bg-umg-blue/95 z-[60] flex flex-col items-center justify-center space-y-10 text-white text-2xl font-lovelo translate-x-full transition-transform duration-500 lg:hidden backdrop-blur-md">
+    <button id="close-mobile" class="absolute top-8 right-8 text-3xl"><i class="fas fa-times"></i></button>
+    <a href="#inicio" class="m-link">Inicio</a>
+    <a href="#mercado" class="m-link">Mercado</a>
+    <a href="#cultura" class="m-link">Cultura</a>
+    <a href="TU_LINK" class="bg-umg-sky text-umg-blue px-10 py-3 rounded-full text-lg">Trivia</a>
+  </div>
+
+  <section id="inicio" class="relative h-screen flex items-center justify-center overflow-hidden">
+    <img
+      src="https://img.freepik.com/foto-gratis/hermosa-chica-tienda-alfombras-tradicionales-ciudad-goreme-capadocia-turquia_335224-554.jpg?t=st=1773685949~exp=1773689549~hmac=c8d9ac3e9a3e7022466233d92b48d816de5947603cab7c549fdf73d5b7376abc&w=1480"
+      class="hero-img absolute inset-0 w-full h-full object-cover" alt="Hero Chichi">
+
+    <div class="relative z-10 text-center px-6">
+      <h2 class="text-umg-sky font-lovelo text-sm md:text-xl mb-4 tracking-[0.4em]">Semana Santa</h2>
+      <h1 class="text-white font-lovelo text-[1.5rem] md:text-7xl lg:text-8xl leading-none">Chichicastenango</h1>
+      <div class="w-24 h-1 bg-umg-sky mx-auto my-5"></div>
+      <p class="text-white text-sm md:text-2xl font-light italic max-w-2xl mx-auto">Mercado tradicional y festividades
+        religiosas</p>
+    </div>
+  </section>
+
+  <section id="mercado" class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="order-2 lg:order-1">
+        <img src="https://tropicanahostel.com/wp-content/uploads/2023/09/mana5280-g9Ai-jaGsWU-unsplash-scaled.jpg"
+          class="rounded-3xl shadow-2xl w-full h-[500px] object-cover" alt="Mercado">
+      </div>
+      <div class="space-y-8 order-1 lg:order-2">
+        <span class="text-umg-sky font-bold tracking-[0.2em] uppercase text-xs">Análisis Cultural</span>
+        <h2 class="text-4xl md:text-5xl font-lovelo text-umg-blue">El Mercado de los Jueves y Domingos</h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Nuestra investigación se centra en la dinámica comercial de la plaza central, donde los colores de los
+          productos agrícolas y las artesanías crean un tapiz cultural único en la región del Quiché.
+        </p>
+        <div class="flex items-center gap-6 text-umg-blue">
+          <i class="fas fa-tags text-3xl opacity-20"></i>
+          <p class="font-semibold italic">Centro de comercio indígena más grande de Centroamérica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cultura" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="relative group h-[400px] rounded-3xl overflow-hidden shadow-xl">
+          <img src="https://i.pinimg.com/originals/3a/ff/f4/3afff4d0cbc7f143348bdfc483f5e8a3.jpg"
+            class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Textiles">
+          <div class="absolute inset-0 bg-gradient-to-t from-umg-blue/90 to-transparent flex flex-col justify-end p-10">
+            <h3 class="text-white font-lovelo text-2xl mb-2">Simbolismo Textil</h3>
+            <p class="text-gray-300 text-sm">El huipil como documento histórico de identidad.</p>
+          </div>
+        </div>
+        <div class="relative group h-[400px] rounded-3xl overflow-hidden shadow-xl">
+          <img
+            src="https://aprende.guatemala.com/wp-content/uploads/2017/02/Iglesia-Parroquial-de-Santo-Tomas-en-Chichicastenango-1.jpg"
+            class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Iglesia">
+          <div class="absolute inset-0 bg-gradient-to-t from-umg-blue/90 to-transparent flex flex-col justify-end p-10">
+            <h3 class="text-white font-lovelo text-2xl mb-2">Santo Tomás</h3>
+            <p class="text-gray-300 text-sm">El sincretismo religioso en las 18 gradas sagradas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-[#d1eeff] flex justify-center items-center font-sans">
+    <div class="w-full max-w-3xl px-6">
+
+      <div class="relative group">
+        <button onclick="toggleParticipants()"
+          class="w-full flex items-center justify-between p-6 bg-slate-900 border-l-4 border-blue-600 rounded-r-lg hover:bg-slate-800 transition-all duration-500 group">
+          <div class="flex flex-col text-left">
+            <span class="text-blue-400 text-xs font-bold tracking-[0.3em] uppercase">Proyecto</span>
+            <h2 class="text-white text-2xl font-light tracking-wide">GRUPO 5 <span class="font-bold">|
+                INTEGRANTES</span></h2>
+          </div>
+          <div id="chevron" class="transform transition-transform duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+
+        <div id="participantsPanel"
+          class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out bg-gradient-to-b from-slate-900 to-black border-x border-slate-800">
+          <div class="p-8 space-y-6">
+            <ul id="lista-nombres" class="space-y-4">
+            </ul>
+
+            <div
+              class="mt-8 pt-6 border-t border-slate-700 flex justify-between items-center text-[10px] tracking-[0.2em] text-slate-500 uppercase">
+              <span>Semana Santa en Guatemala</span>
+              <span class="text-blue-700 font-bold">UMG 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-[#d1eeff] flex justify-center items-center font-sans border-t border-blue-200">
+    <div class="w-full max-w-3xl px-6">
+
+      <div class="relative shadow-xl rounded-lg overflow-hidden">
+        <button onclick="toggleItinerary()"
+          class="w-full flex items-center justify-between p-6 bg-white border-l-8 border-[#003366] hover:bg-slate-50 transition-all duration-500 group">
+          <div class="flex flex-col text-left">
+            <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase">Acceso Digital</span>
+            <h2 class="text-[#003366] text-2xl font-light tracking-wide italic">ITINERARIO <span
+                class="font-bold text-black">| ESCANEAR QR</span></h2>
+          </div>
+          <div id="chevron-itinerary" class="text-[#003366] transform transition-transform duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        </button>
+
+        <div id="itineraryPanel"
+          class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out bg-white border-x border-blue-100">
+          <div class="p-10 flex flex-col items-center space-y-6">
+
+            <div class="relative p-4 bg-white border-2 border-dashed border-blue-200 rounded-2xl group/qr">
+              <img src="QR_1-1024.png" alt="QR Itinerario"
+                class="w-48 h-48 md:w-64 md:h-64 object-contain transition-transform duration-500 group-hover/qr:scale-105">
+
+              <div class="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-[#003366]"></div>
+              <div class="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-[#003366]"></div>
+              <div class="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-[#003366]"></div>
+              <div class="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-[#003366]"></div>
+            </div>
+
+            <div class="text-center space-y-2">
+              <p class="text-slate-600 font-medium">Escanea para visualizar el cronograma completo</p>
+              <p class="text-[#003366] text-xs font-mono tracking-tighter opacity-70">DATA_SYNC_ID: UMG-SS2026-ITIN</p>
+            </div>
+
+            <div class="pt-4">
+              <div class="h-1 w-20 bg-blue-100 mx-auto rounded-full"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-white py-12 text-center border-t border-gray-100">
+    <p class="font-lovelo text-umg-blue text-xs mb-2">Universidad Mariano Gálvez de Guatemala</p>
+    <p class="text-gray-400 text-[10px] tracking-widest uppercase">Facultad de Hoteleria, Turismo y Gastronomia</p>
+  </footer>
+
+  <!-- SCRIPT ITINERARIO -->
+  <script>
+    function toggleItinerary() {
+      const panel = document.getElementById('itineraryPanel');
+      const chevron = document.getElementById('chevron-itinerary');
+
+      if (panel.style.maxHeight && panel.style.maxHeight !== "0px") {
+        panel.style.maxHeight = "0px";
+        chevron.style.transform = "rotate(0deg) scale(1)";
+      } else {
+        // Ajustamos a 600px para que quepa el QR cómodamente
+        panel.style.maxHeight = "650px";
+        chevron.style.transform = "rotate(360deg) scale(1.2)";
+      }
+    }
+  </script>
+  <!-- SCRIPT INTEGRANTES -->
+  <script>
+    // Data de los integrantes
+    const nombres = [
+      "NATASHA LOURDES LÓPEZ MENA",
+      "MARÍA JOSÉ ALVAREZ GONZÁLEZ",
+      "KEVIN ANDRÉS ZELADA GONZÁLEZ",
+      "CARMEN DANIELA ALVAREZ RIVERA",
+      "JOSÉ MAURICIO BARRIOS HERNÁNDEZ",
+      "DIEGO FERNANDO XITUMUL RAMOS"
+    ];
+
+    const lista = document.getElementById('lista-nombres');
+    nombres.forEach((nombre, index) => {
+      const li = document.createElement('li');
+      li.className = "flex items-center space-x-4 opacity-0 transform translate-x-4 transition-all duration-700 ease-out text-slate-300 hover:text-white group/item";
+      li.style.transitionDelay = `${(index + 1) * 100}ms`;
+      li.innerHTML = `
+            <span class="text-blue-600 font-mono text-xs">0${index + 1}</span>
+            <span class="text-lg font-light tracking-wider uppercase">${nombre}</span>
+            <div class="h-[1px] flex-grow bg-slate-800 group-hover/item:bg-blue-900 transition-colors"></div>
+        `;
+      lista.appendChild(li);
+    });
+
+    // Función de Toggle
+    function toggleParticipants() {
+      const panel = document.getElementById('participantsPanel');
+      const chevron = document.getElementById('chevron');
+      const items = lista.querySelectorAll('li');
+
+      if (panel.style.maxHeight && panel.style.maxHeight !== "0px") {
+        panel.style.maxHeight = "0px";
+        chevron.style.transform = "rotate(0deg)";
+        items.forEach(li => {
+          li.classList.replace('opacity-100', 'opacity-0');
+          li.classList.replace('translate-x-0', 'translate-x-4');
+        });
+      } else {
+        panel.style.maxHeight = "600px";
+        chevron.style.transform = "rotate(180deg)";
+        items.forEach(li => {
+          li.classList.replace('opacity-0', 'opacity-100');
+          li.classList.replace('translate-x-4', 'translate-x-0');
+        });
+      }
+    }
+  </script>
+  <!-- SCRIPT LOADER -->
+  <script>
+    // --- 1. Lógica del Splash Screen Secuencial ---
+    const splash = document.getElementById('splash-screen');
+    const splashGroup = document.getElementById('splash-group');
+    const splashLogo = document.getElementById('splash-logo');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Paso 1: Mostrar nombre del grupo
+      setTimeout(() => splashGroup.classList.add('show'), 500);
+
+      // Paso 2: Desaparecer nombre
+      setTimeout(() => splashGroup.classList.remove('show'), 3000);
+
+      // Paso 4: Desaparecer todo e iniciar página
+      setTimeout(() => {
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.remove();
+          document.body.classList.remove('overflow-hidden');
+        }, 800);
+      }, 3500);
+    });
+
+    // --- 2. Lógica de Pendones Dinámicos ---
+    const p1 = document.getElementById('p1');
+    const p2 = document.getElementById('p2');
+    let pState = true;
+
+    setInterval(() => {
+      if (pState) {
+        p1.style.opacity = '0';
+        p2.style.opacity = '1';
+      } else {
+        p1.style.opacity = '1';
+        p2.style.opacity = '0';
+      }
+      pState = !pState;
+    }, 6000); // Cambio cada 6 segundos
+
+    // --- 3. Menú Móvil ---
+    const btnM = document.getElementById('btn-mobile');
+    const closeM = document.getElementById('close-mobile');
+    const menuM = document.getElementById('mobile-menu');
+    const mLinks = document.querySelectorAll('.m-link');
+
+    btnM.onclick = () => menuM.classList.remove('translate-x-full');
+    closeM.onclick = () => menuM.classList.add('translate-x-full');
+    mLinks.forEach(l => l.onclick = () => menuM.classList.add('translate-x-full'));
+  </script>
 </body>
+
 </html>
