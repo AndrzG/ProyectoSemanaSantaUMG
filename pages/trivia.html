@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia y Feedback | Chichicastenango</title>
+  <link rel="icon" href="https://umg.edu.gt/img/Umg.png" type="image">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'umg-blue': '#003366',
+            'umg-sky': '#00c1ff',
+          },
+          fontFamily: { sans: ['Inter', 'sans-serif'], lovelo: ['Montserrat', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .font-lovelo { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+    .glass-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
+    .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .star-rating input:checked ~ label { color: #FBC02D; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <header class="fixed w-full z-50 glass-header border-b border-gray-100 shadow-sm h-20">
+    <div class="max-w-7xl mx-auto h-full px-6 flex justify-between items-center">
+      <a href="../index.html">
+        <img src="https://umg.edu.gt/img/Umg.png" alt="UMG Logo" class="h-12 md:h-16">
+      </a>
+      <a href="../index.html" class="text-umg-blue font-bold text-xs uppercase tracking-widest hover:text-umg-sky transition flex items-center">
+        <i class="fas fa-home mr-2"></i> Volver al Inicio
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center p-4 pt-28 pb-10">
+    <div id="app-container" class="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden relative border border-gray-100 min-h-[450px]">
+      </div>
+  </main>
+
+  <script>
+    const FORMSPREE_URL = 'https://formspree.io/f/xdawpbyb';
+    const questions = [
+      { q: "¿Días de mercado tradicional?", options: ["Lunes y Viernes", "Martes y Sábados", "Jueves y Domingos", "Miércoles y Domingos"], ans: 2, exp: "El mercado principal ocurre jueves y domingos." },
+      { q: "¿Cuántos escalones tiene la Iglesia de Santo Tomás?", options: ["12 escalones", "18 escalones", "20 escalones", "33 escalones"], ans: 1, exp: "Representan los 18 meses del calendario maya Haab." },
+      { q: "¿Santo patrono de Chichicastenango?", options: ["San Nicolás", "San Miguel", "Santo Tomás", "San Andrés"], ans: 2, exp: "Se celebra cada 21 de diciembre." },
+      { q: "¿Libro sagrado encontrado aquí?", options: ["Chilam Balam", "Popol Vuh", "Códice Dresde", "Libro de Chilam"], ans: 1, exp: "Fue hallado por Fray Francisco Ximénez." },
+      { q: "¿Danza donde se lanzan de un poste alto?", options: ["Danza del Venado", "Danza de Moros", "Palo Volador", "La Conquista"], ans: 2, exp: "Es un ritual de origen prehispánico." }
+    ];
+
+    let currentQ = 0, score = 0;
+    let userData = { name: '', email: '' };
+    const app = document.getElementById('app-container');
+
+    // --- FUNCIÓN DE VALIDACIÓN DE CORREO ---
+    function validateEmail(email) {
+      // Verifica texto + @ + texto + . + texto
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    // --- PANTALLA 1: INGRESO ---
+    function renderIntro() {
+      app.innerHTML = `
+        <div class="p-8 sm:p-10 fade-in text-center">
+          <h2 class="text-2xl font-lovelo text-umg-blue mb-6">Módulo de Evaluación</h2>
+          <div class="space-y-4 text-left">
+            <div>
+              <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Nombre y Apellido</label>
+              <input type="text" id="userName" class="w-full px-5 py-3 rounded-xl border border-gray-200 focus:border-umg-blue outline-none transition-all" placeholder="Ej. José Valdez">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Correo Electrónico</label>
+              <input type="email" id="userEmail" class="w-full px-5 py-3 rounded-xl border border-gray-200 focus:border-umg-blue outline-none transition-all" placeholder="jvalde03@gmail.com">
+            </div>
+            <div id="error-msg" class="text-red-500 text-xs font-bold hidden px-2"><i class="fas fa-exclamation-circle mr-1"></i> Ya has participado con estos datos.</div>
+            <button onclick="startTrivia()" class="w-full mt-6 bg-umg-blue text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-lg active:scale-95">COMENZAR TRIVIA</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function startTrivia() {
+      const name = document.getElementById('userName').value.trim().toUpperCase();
+      const email = document.getElementById('userEmail').value.trim().toLowerCase();
+      const registrations = JSON.parse(localStorage.getItem('trivia_history') || '[]');
+
+      if(!name || !email) { 
+        alert("Por favor, completa todos los campos."); 
+        return; 
+      }
+
+      // Validación del formato de correo
+      if(!validateEmail(email)) {
+        alert("El formato del correo electrónico no es válido. Debe incluir '@' y un '.' (punto).");
+        return;
+      }
+
+      if(registrations.some(r => r.name === name && r.email === email)) {
+        document.getElementById('error-msg').classList.remove('hidden'); return;
+      }
+
+      userData = { name, email };
+      renderQuestion();
+    }
+
+    // --- PANTALLA 2: TRIVIA ---
+    function renderQuestion() {
+      const q = questions[currentQ];
+      app.innerHTML = `
+        <div class="p-8 sm:p-10 fade-in">
+          <div class="flex justify-between mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+            <span>Pregunta ${currentQ + 1}/5</span>
+            <span class="text-umg-blue">Score: ${score}</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-6">${q.q}</h3>
+          <div class="space-y-3" id="options">
+            ${q.options.map((o, i) => `<button onclick="checkAnswer(${i}, this)" class="w-full text-left p-4 rounded-xl border-2 border-gray-100 hover:border-blue-200 transition-all font-medium">${o}</button>`).join('')}
+          </div>
+          <div id="feedback" class="mt-6 hidden rounded-xl p-4 text-sm border"></div>
+          <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-6 bg-black text-white font-bold py-4 rounded-xl active:scale-95 transition-all">SIGUIENTE</button>
+        </div>
+      `;
+    }
+
+    function checkAnswer(idx, btn) {
+      const q = questions[currentQ];
+      const isCorrect = idx === q.ans;
+      document.querySelectorAll('#options button').forEach(b => b.disabled = true);
+      
+      if(isCorrect) { btn.classList.add('border-green-500', 'bg-green-50'); score += 20; }
+      else { btn.classList.add('border-red-500', 'bg-red-50'); document.querySelectorAll('#options button')[q.ans].classList.add('border-green-400'); }
+
+      const fb = document.getElementById('feedback');
+      fb.classList.remove('hidden');
+      fb.className = `mt-6 rounded-xl p-4 text-sm border ${isCorrect ? 'bg-green-50 text-green-800 border-green-200' : 'bg-red-50 text-red-800 border-red-200'}`;
+      fb.innerHTML = `<strong>${isCorrect ? '¡Correcto!' : 'Incorrecto.'}</strong> ${q.exp}`;
+      document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQ++;
+      if(currentQ < questions.length) renderQuestion();
+      else sendTriviaOnly();
+    }
+
+    // --- ENVÍO 1: SOLO TRIVIA (Automático) ---
+    async function sendTriviaOnly() {
+      app.innerHTML = `<div class="p-10 text-center"><i class="fas fa-circle-notch fa-spin text-4xl text-umg-blue mb-4"></i><p>Procesando puntaje...</p></div>`;
+      
+      try {
+        await fetch(FORMSPREE_URL, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ Tipo: 'Puntaje Trivia', Nombre: userData.name, Email: userData.email, Puntaje: score + "/100" })
+        });
+        const history = JSON.parse(localStorage.getItem('trivia_history') || '[]');
+        history.push(userData);
+        localStorage.setItem('trivia_history', JSON.stringify(history));
+        renderFeedbackForm();
+      } catch (e) { renderFeedbackForm(); }
+    }
+
+    // --- PANTALLA 3: FORMULARIO DE FEEDBACK ---
+    function renderFeedbackForm() {
+      app.innerHTML = `
+        <div class="p-8 sm:p-10 fade-in text-center">
+          <div class="bg-blue-50 text-umg-blue p-4 rounded-2xl mb-6">
+            <span class="block text-xs font-bold uppercase tracking-widest mb-1">Tu Punteo</span>
+            <span class="text-4xl font-black">${score}/100</span>
+          </div>
+          <h2 class="text-xl font-lovelo text-gray-900 mb-6">Califica la Exposición</h2>
+          
+          <form id="feedback-form" onsubmit="sendFeedback(event)" class="text-left space-y-5">
+            <div>
+              <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Dominio del Tema</label>
+              <select name="Dominio_Tema" class="w-full p-3 rounded-lg border border-gray-200 outline-none focus:border-umg-blue bg-gray-50 text-sm" required>
+                <option value="Excelente">Excelente</option>
+                <option value="Bueno">Bueno</option>
+                <option value="Regular">Regular</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Material Visual / Interactividad</label>
+              <select name="Material_Visual" class="w-full p-3 rounded-lg border border-gray-200 outline-none focus:border-umg-blue bg-gray-50 text-sm" required>
+                <option value="Muy Creativo">Muy Creativo</option>
+                <option value="Adecuado">Adecuado</option>
+                <option value="Puede mejorar">Puede mejorar</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">¿En qué debemos mejorar? <span class='text-red-300'>*</span></label>
+              <textarea name="Mensaje_Mejora" required class="w-full p-3 h-24 rounded-lg border border-gray-200 outline-none focus:border-umg-blue bg-gray-50 text-sm" placeholder="Escribe aquí tu sugerencia..."></textarea>
+            </div>
+            <button type="submit" class="w-full bg-umg-blue text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-2xl transition-all active:scale-95">ENVIAR CALIFICACIÓN</button>
+          </form>
+        </div>
+      `;
+    }
+
+    // --- ENVÍO 2: FEEDBACK COMPLETO ---
+    async function sendFeedback(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.innerText = 'ENVIANDO FEEDBACK...';
+      btn.disabled = true;
+
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        await fetch(FORMSPREE_URL, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            Tipo: 'Feedback Exposición',
+            Nombre: userData.name, 
+            Email: userData.email, 
+            ...data 
+          })
+        });
+        showFinalThanks();
+      } catch (err) { alert("Error al enviar. Intenta de nuevo."); btn.disabled = false; btn.innerText = 'ENVIAR CALIFICACIÓN'; }
+    }
+
+    // --- PANTALLA FINAL ---
+    function showFinalThanks() {
+      app.innerHTML = `
+        <div class="p-12 text-center fade-in">
+          <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-heart text-3xl"></i>
+          </div>
+          <h2 class="text-2xl font-lovelo text-gray-900 mb-2">¡Gracias por tu apoyo!</h2>
+          <p class="text-gray-500 text-sm leading-relaxed mb-8">
+            Agradecemos mucho tus respuestas y comentarios, <span class="font-bold text-gray-800">${userData.name}</span>. Nos ayudan a mejorar nuestra formación profesional.
+          </p>
+          <div class="text-[10px] text-gray-400 uppercase tracking-widest">
+            Serás redirigido al inicio en unos segundos...
+          </div>
+        </div>
+      `;
+      
+      // Redirección tras 5 segundos
+      setTimeout(() => { window.location.href = '../index.html'; }, 5000);
+    }
+
+    renderIntro();
+  </script>
+</body>
+</html>

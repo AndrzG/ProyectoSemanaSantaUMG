@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada | Exposición UMG</title>
+    <link rel="icon" href="https://umg.edu.gt/img/Umg.png" type="image">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'umg-blue': '#003366',
+                        'umg-sky': '#00c1ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        lovelo: ['Montserrat', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .font-lovelo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* Pendones: Efecto sobresaliente con profundidad */
+        .pendon-container {
+            filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.15));
+            transform: translateY(15px);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
+    <header class="fixed w-full z-50 glass-header border-b border-gray-100 shadow-sm h-20 md:h-24">
+        <div class="max-w-7xl mx-auto h-full px-6 flex justify-between items-center relative">
+            <div class="flex items-center">
+                <a href="index.html">
+                    <img src="https://umg.edu.gt/img/Umg.png" alt="UMG Logo"
+                        class="h-[3.5rem] md:h-[4.7rem] hover:scale-105 transition-transform">
+                </a>
+            </div>
+            <nav class="hidden lg:flex items-center space-x-8 mr-40">
+                <a href="index.html#inicio"
+                    class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Inicio</a>
+                <a href="index.html#mercado"
+                    class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Mercado</a>
+                <a href="index.html#cultura"
+                    class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Cultura</a>
+                <a href="/" target="_blank"
+                    class="bg-umg-blue text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-umg-sky transition">Trivia</a>
+            </nav>
+            <button id="btn-mobile" class="relative right-[3rem] lg:hidden text-umg-blue text-2xl p-2 z-50">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="pendon-container absolute right-[0.5rem] md:right-10">
+                <div class="relative w-20 h-28 md:w-32 md:h-44 p-2">
+                    <img id="p1" src="https://umg.edu.gt/img/60_Umg.png"
+                        class="absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 opacity-100"
+                        alt="60 años UMG">
+                    <img id="p2" src="https://umg.edu.gt/img/60.png"
+                        class="absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 opacity-0"
+                        alt="60 años">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-umg-blue/95 z-[60] flex flex-col items-center justify-center space-y-10 text-white text-2xl font-lovelo translate-x-full transition-transform duration-500 lg:hidden backdrop-blur-md">
+        <button id="close-mobile" class="absolute top-8 right-8 text-3xl"><i class="fas fa-times"></i></button>
+        <a href="index.html#inicio" class="m-link">Inicio</a>
+        <a href="index.html#mercado" class="m-link">Mercado</a>
+        <a href="index.html#cultura" class="m-link">Cultura</a>
+        <a href="/" class="bg-umg-sky text-umg-blue px-10 py-3 rounded-full text-lg">Trivia</a>
+    </div>
+    <main
+        class="flex-grow flex items-center justify-center px-6 pt-24 pb-12 relative overflow-hidden bg-gradient-to-b from-white to-[#d1eeff]/30">
+        <div class="text-center z-10 max-w-2xl mx-auto">
+            <h1
+                class="text-[8rem] md:text-[12rem] font-lovelo text-umg-blue leading-none tracking-tighter drop-shadow-lg">
+                404
+            </h1>
+            <div class="w-24 h-1 bg-umg-sky mx-auto my-6 rounded-full"></div>
+            <h2 class="text-2xl md:text-3xl font-lovelo text-gray-900 mb-4 tracking-widest">
+                Ruta Desconocida
+            </h2>
+            <p class="text-gray-600 text-lg md:text-xl font-light mb-10 px-4">
+                Parece que te has desviado del recorrido turístico, la página que buscas no está en nuestro itinerario
+                actual
+            </p>
+            <a href="index.html"
+                class="inline-flex items-center justify-center space-x-3 bg-umg-blue text-white px-8 py-4 rounded-full text-sm font-bold tracking-widest hover:bg-umg-sky transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 group">
+                <i class="fas fa-compass text-lg group-hover:rotate-45 transition-transform duration-300"></i>
+                <span>VOLVER AL INICIO</span>
+            </a>
+        </div>
+    </main>
+    <footer class="bg-white py-12 text-center border-t border-gray-100 mt-auto">
+        <p class="font-lovelo text-umg-blue text-xs mb-2">Universidad Mariano Gálvez de Guatemala</p>
+        <p class="text-gray-400 text-[10px] tracking-widest uppercase">Facultad de Hoteleria, Turismo y Gastronomia</p>
+    </footer>
+
+    <script>
+        // Lógica de Pendones Dinámicos
+        const p1 = document.getElementById('p1');
+        const p2 = document.getElementById('p2');
+        let pState = true;
+
+        setInterval(() => {
+            if (pState) {
+                p1.style.opacity = '0';
+                p2.style.opacity = '1';
+            } else {
+                p1.style.opacity = '1';
+                p2.style.opacity = '0';
+            }
+            pState = !pState;
+        }, 6000);
+
+        // Menú Móvil
+        const btnM = document.getElementById('btn-mobile');
+        const closeM = document.getElementById('close-mobile');
+        const menuM = document.getElementById('mobile-menu');
+
+        btnM.onclick = () => menuM.classList.remove('translate-x-full');
+        closeM.onclick = () => menuM.classList.add('translate-x-full');
+    </script>
+</body>
+</html>
