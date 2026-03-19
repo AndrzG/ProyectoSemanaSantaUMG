@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chichicastenango | Exposición UMG</title>
-  <link rel="icon" href="https://umg.edu.gt/img/Umg.png" type="image">
+  <title>Chichicastenango | Exposición</title>
+  <link rel="icon" href="images/Umg.png" type="image">
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@800&display=swap"
@@ -38,170 +38,276 @@
       letter-spacing: 0.15em;
     }
 
-    /* Splash Screen Estricto */
-    #splash-screen {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      z-index: 10000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      transition: opacity 0.8s ease-in-out;
+    /* Clase para cuando el header tiene fondo */
+    #main-header.is-scrolled {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid #f3f4f6;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      color: #003366;
+      /* Azul original */
     }
 
-    .splash-text {
-      opacity: 0;
-      transition: opacity 0.6s ease-in-out;
+    /* Forzamos el color de los links cuando hay scroll */
+    #main-header.is-scrolled nav a:not(.bg-\[\#003366\]) {
+      color: #003366;
     }
 
-    .splash-logo-img {
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    #main-header.is-scrolled #btn-mobile {
+      color: #003366;
     }
 
-    .show {
-      opacity: 1 !important;
-    }
-
-    .show-logo {
-      opacity: 1 !important;
-      transform: scale(1) !important;
-    }
-
-    /* Pendones: Efecto sobresaliente con profundidad */
     .pendon-container {
       filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.15));
-      transform: translateY(15px);
-      /* Ajuste para que "cuelguen" del header */
-    }
-
-    /* Glassmorphism Header */
-    .glass-header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    /* Hero Image Fix */
-    .hero-img {
-      filter: brightness(0.6) contrast(1.1);
+      transform: translateY(10px);
     }
   </style>
 </head>
 
 <body class="bg-white text-gray-900 overflow-hidden">
-
-  <div id="splash-screen">
-    <div class="relative flex flex-col items-center">
-      <h1 id="splash-group" class="splash-text font-lovelo text-[2.5rem] md:text-5xl text-umg-blue text-center">
-        GRUPO 5 <br>
-        <span class="text-2xl">sección C</span>
+  <div id="splash-screen"
+    class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center transition-opacity duration-700">
+    <div class="relative flex flex-col items-center animate-pulse">
+      <span class="text-blue-600 font-bold tracking-[0.4em] uppercase text-xs mb-4">Proyecto de Turismo</span>
+      <h1 id="splash-group"
+        class="splash-text font-lovelo text-5xl md:text-7xl text-[#003366] text-center tracking-wide">
+        GRUPO 5
       </h1>
+      <div class="w-16 h-1 bg-blue-600 mx-auto my-4"></div>
+      <span class="text-xl md:text-2xl text-gray-500 font-light tracking-widest uppercase">Sección C</span>
     </div>
   </div>
 
-  <header class="fixed w-full z-50 glass-header border-b border-gray-100 shadow-sm h-20 md:h-24">
+  <header id="main-header"
+    class="fixed w-full z-50 h-20 md:h-24 transition-all duration-500 transform translate-y-0 text-white">
+
     <div class="max-w-7xl mx-auto h-full px-6 flex justify-between items-center relative">
 
-      <div class="flex items-center">
-        <img src="https://umg.edu.gt/img/Umg.png" alt="UMG Logo" class="h-[3.5rem] md:h-[4.7rem]">
+      <div class="flex items-center reload cursor-pointer">
+        <img src="images/Umg.png" alt="Logo Universidad" class="h-14 md:h-[4.7rem] object-contain drop-shadow-sm">
       </div>
 
-      <nav class="hidden lg:flex items-center space-x-8 mr-40">
-        <a href="#inicio" class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Inicio</a>
-        <a href="#mercado" class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Mercado</a>
-        <a href="#cultura" class="text-umg-blue font-bold text-sm uppercase hover:text-umg-sky transition">Cultura</a>
+      <nav id="nav-links" class="hidden lg:flex items-center space-x-10 mr-40">
+        <a href="#inicio"
+          class="font-bold text-xs tracking-widest uppercase hover:text-blue-400 transition-colors duration-300">Inicio</a>
+        <a href="#mercado"
+          class="font-bold text-xs tracking-widest uppercase hover:text-blue-400 transition-colors duration-300">Mercado</a>
+        <a href="#cultura"
+          class="font-bold text-xs tracking-widest uppercase hover:text-blue-400 transition-colors duration-300">Cultura</a>
         <a href="pages/trivia.html"
-          class="bg-umg-blue text-white px-6 py-2 rounded-full text-xs font-bold hover:bg-umg-sky transition">Trivia</a>
+          class="bg-[#003366] text-white px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase hover:bg-blue-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">Trivia</a>
       </nav>
 
-      <button id="btn-mobile" class="relative right-[3rem] lg:hidden text-umg-blue text-2xl p-2 z-50">
-        <i class="fas fa-bars"></i>
+      <button id="btn-mobile"
+        class="relative right-[3rem] lg:hidden text-2xl p-2 z-50 hover:scale-110 transition-transform">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
       </button>
 
-      <div class="pendon-container absolute right-[0.5rem] md:right-10">
-        <div class="relative w-20 h-28 md:w-32 md:h-44 p-2">
+      <div id="pendon-trigger" class="pendon-container absolute right-[0.5rem] md:right-10 cursor-pointer">
+        <div class="relative w-20 h-28 md:w-32 md:h-44 p-2 drop-shadow-md">
           <img id="p1" src="https://umg.edu.gt/img/60_Umg.png"
             class="absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 opacity-100"
-            alt="60 años UMG">
+            alt="Aniversario">
           <img id="p2" src="https://umg.edu.gt/img/60.png"
             class="absolute inset-0 w-full h-full object-contain p-2 transition-opacity duration-1000 opacity-0"
-            alt="60 años">
+            alt="Aniversario 60">
         </div>
       </div>
     </div>
   </header>
 
   <div id="mobile-menu"
-    class="fixed inset-0 bg-umg-blue/95 z-[60] flex flex-col items-center justify-center space-y-10 text-white text-2xl font-lovelo translate-x-full transition-transform duration-500 lg:hidden backdrop-blur-md">
-    <button id="close-mobile" class="absolute top-8 right-8 text-3xl"><i class="fas fa-times"></i></button>
-    <a href="#inicio" class="m-link">Inicio</a>
-    <a href="#mercado" class="m-link">Mercado</a>
-    <a href="#cultura" class="m-link">Cultura</a>
-    <a href="pages/trivia.html" class="bg-umg-sky text-umg-blue px-10 py-3 rounded-full text-lg">Trivia</a>
+    class="fixed inset-0 bg-[#003366]/98 z-[60] flex flex-col items-center justify-center space-y-8 text-white text-2xl font-lovelo translate-x-full transition-transform duration-500 ease-in-out lg:hidden backdrop-blur-xl">
+    <button id="close-mobile"
+      class="absolute top-8 right-8 text-white p-2 hover:rotate-90 transition-transform duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <span class="text-blue-400 font-sans text-xs font-bold tracking-[0.4em] uppercase mb-4">Navegación</span>
+    <a href="#inicio" class="m-link text-4xl hover:text-blue-300 transition-colors">Inicio</a>
+    <a href="#mercado" class="m-link text-4xl hover:text-blue-300 transition-colors">Mercado</a>
+    <a href="#cultura" class="m-link text-4xl hover:text-blue-300 transition-colors">Cultura</a>
+    <div class="w-12 h-[1px] bg-white/20 my-4"></div>
+    <a href="pages/trivia.html"
+      class="bg-white text-[#003366] px-12 py-4 rounded-full text-xl hover:bg-blue-50 transition-colors shadow-xl">Entrar
+      a Trivia</a>
   </div>
 
   <section id="inicio" class="relative h-screen flex items-center justify-center overflow-hidden">
-    <img
-      src="https://img.freepik.com/foto-gratis/hermosa-chica-tienda-alfombras-tradicionales-ciudad-goreme-capadocia-turquia_335224-554.jpg?t=st=1773685949~exp=1773689549~hmac=c8d9ac3e9a3e7022466233d92b48d816de5947603cab7c549fdf73d5b7376abc&w=1480"
-      class="hero-img absolute inset-0 w-full h-full object-cover" alt="Hero Chichi">
 
-    <div class="relative z-10 text-center px-6">
-      <h2 class="text-umg-sky font-lovelo text-sm md:text-xl mb-4 tracking-[0.4em]">Semana Santa</h2>
-      <h1 class="text-white font-lovelo text-[1.5rem] md:text-7xl lg:text-8xl leading-none">Chichicastenango</h1>
-      <div class="w-24 h-1 bg-umg-sky mx-auto my-5"></div>
-      <p class="text-white text-sm md:text-2xl font-light italic max-w-2xl mx-auto">Mercado tradicional y festividades
-        religiosas</p>
+    <div class="absolute inset-0 z-0">
+      <img src="images/1518105779142-d975f22f1b0a.avif" class="hero-img w-full h-full object-cover"
+        alt="Iglesia de Santo Tomás, Chichicastenango">
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6 max-w-5xl">
+      <h2 class="text-umg-sky font-lovelo text-sm md:text-xl mb-4 tracking-[0.4em] uppercase opacity-90">
+        Semana Santa
+      </h2>
+
+      <h1 class="text-white font-lovelo text-2xl md:text-7xl leading-none drop-shadow-lg">
+        CHICHICASTENANGO
+      </h1>
+
+      <div class="w-48 h-1 bg-umg-sky mx-auto my-5 md:my-8 md:w-[25rem]"></div>
+
+      <p class="text-white text-xs md:text-2xl font-light italic max-w-2xl mx-auto mb-10 leading-relaxed">
+        Descubre la magia del mercado tradicional y el fervor de las festividades religiosas en el corazón del Quiché.
+      </p>
+
+      <a href="#mercado"
+        class="inline-block px-10 py-4 border border-white text-white font-lovelo text-xs md:text-sm tracking-widest hover:bg-white hover:text-black transition-all duration-500 ease-in-out uppercase bg-transparent">
+        Explorar Experiencia
+      </a>
+    </div>
+
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      <div class="w-[5px] h-12 bg-gradient-to-b from-white to-transparent"></div>
     </div>
   </section>
 
-  <section id="mercado" class="py-24 px-6 max-w-7xl mx-auto">
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <div class="order-2 lg:order-1">
-        <img src="https://tropicanahostel.com/wp-content/uploads/2023/09/mana5280-g9Ai-jaGsWU-unsplash-scaled.jpg"
-          class="rounded-3xl shadow-2xl w-full h-[500px] object-cover" alt="Mercado">
-      </div>
-      <div class="space-y-8 order-1 lg:order-2">
-        <span class="text-umg-sky font-bold tracking-[0.2em] uppercase text-xs">Análisis Cultural</span>
-        <h2 class="text-4xl md:text-5xl font-lovelo text-umg-blue">El Mercado de los Jueves y Domingos</h2>
-        <p class="text-gray-600 text-lg leading-relaxed">
-          Nuestra investigación se centra en la dinámica comercial de la plaza central, donde los colores de los
-          productos agrícolas y las artesanías crean un tapiz cultural único en la región del Quiché.
+  <section id="mercado" class="py-24 px-6 bg-gray-50/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 space-y-3">
+        <span class="text-umg-sky font-bold tracking-[0.2em] uppercase text-xs">Análisis Cultural & Económico</span>
+        <h2 class="text-4xl md:text-5xl font-lovelo text-umg-blue">
+          El Mercado: Corazón del Quiché
+        </h2>
+        <div class="w-16 h-1 bg-umg-sky mx-auto my-6"></div>
+        <p class="text-gray-600 text-lg max-w-2xl mx-auto italic">
+          Un torbellino de colores, aromas y tradiciones que definen la identidad de Chichicastenango.
         </p>
-        <div class="flex items-center gap-6 text-umg-blue">
-          <i class="fas fa-tags text-3xl opacity-20"></i>
-          <p class="font-semibold italic">Centro de comercio indígena más grande de Centroamérica.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+        <div class="order-2 lg:order-2 grid grid-cols-2 gap-4">
+          <div class="col-span-1 row-span-2 overflow-hidden rounded-3xl shadow-lg h-full">
+            <img src="images/Traje-tipico.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              alt="Vibrante venta de textiles en Chichicastenango">
+          </div>
+          <div class="col-span-1 overflow-hidden rounded-3xl shadow-lg h-[240px]">
+            <img src="images/mercado-de-chichicastenango-en-guatemala.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              alt="Vistas del mercado y productos tradicionales">
+          </div>
+          <div class="col-span-1 overflow-hidden rounded-3xl shadow-lg h-[240px]">
+            <img src="images/V_mascaras.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              alt="Venta de máscaras de madera tradicionales">
+          </div>
         </div>
+
+        <div class="space-y-10 order-1 lg:order-1">
+          <div class="space-y-4">
+            <p class="text-gray-600 text-lg leading-relaxed">
+              Nuestra investigación profundiza en la vibrante plaza central, reconocida como el centro de comercio
+              indígena más grande de Centroamérica. Más que simples transacciones, el mercado es un punto de encuentro
+              vital para las comunidades locales, donde la economía se entrelaza íntimamente con la cultura.
+            </p>
+            <p class="text-gray-600 text-lg leading-relaxed">
+              Los jueves y domingos, la ciudad se transforma en un mosaico de puestos que exhiben intrincados textiles,
+              máscaras de madera talladas y productos agrícolas frescos, creando un espectáculo visual y sensorial
+              incomparable.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-x-8 gap-y-6 pt-6 border-t border-gray-100">
+            <div class="flex items-start gap-4">
+              <i class="fas fa-calendar-day text-umg-sky text-2xl mt-1"></i>
+              <div>
+                <h4 class="font-semibold text-umg-blue">Días de Mercado</h4>
+                <p class="text-sm text-gray-500">Jueves y domingos de mayor actividad.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <i class="fas fa-exchange-alt text-umg-sky text-2xl mt-1"></i>
+              <div>
+                <h4 class="font-semibold text-umg-blue">Tradición del Trueque</h4>
+                <p class="text-sm text-gray-500">Persiste como forma de intercambio cultural.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 col-span-2">
+              <i class="fas fa-hands-helping text-umg-sky text-2xl mt-1"></i>
+              <div>
+                <h4 class="font-semibold text-umg-blue">Motor Socioeconómico</h4>
+                <p class="text-sm text-gray-500">Sustento clave para miles de familias de la región.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </div>
   </section>
 
-  <section id="cultura" class="py-24 bg-gray-50">
+  <section id="cultura" class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="relative group h-[400px] rounded-3xl overflow-hidden shadow-xl">
-          <img src="https://i.pinimg.com/originals/3a/ff/f4/3afff4d0cbc7f143348bdfc483f5e8a3.jpg"
-            class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Textiles">
-          <div class="absolute inset-0 bg-gradient-to-t from-umg-blue/90 to-transparent flex flex-col justify-end p-10">
-            <h3 class="text-white font-lovelo text-2xl mb-2">Simbolismo Textil</h3>
-            <p class="text-gray-300 text-sm">El huipil como documento histórico de identidad.</p>
-          </div>
-        </div>
-        <div class="relative group h-[400px] rounded-3xl overflow-hidden shadow-xl">
-          <img
-            src="https://aprende.guatemala.com/wp-content/uploads/2017/02/Iglesia-Parroquial-de-Santo-Tomas-en-Chichicastenango-1.jpg"
-            class="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Iglesia">
-          <div class="absolute inset-0 bg-gradient-to-t from-umg-blue/90 to-transparent flex flex-col justify-end p-10">
-            <h3 class="text-white font-lovelo text-2xl mb-2">Santo Tomás</h3>
-            <p class="text-gray-300 text-sm">El sincretismo religioso en las 18 gradas sagradas.</p>
-          </div>
-        </div>
+
+      <div class="text-center mb-12">
+        <span class="text-umg-sky font-bold tracking-[0.2em] uppercase text-xs">Espiritualidad Viva</span>
+        <h2 class="text-3xl md:text-5xl font-lovelo text-umg-blue mt-2">Cultura y Fe</h2>
+        <div class="w-16 h-1 bg-umg-sky mx-auto mt-4"></div>
       </div>
+
+      <div class="grid md:grid-cols-2 gap-6 lg:gap-10">
+
+        <div class="relative group h-[350px] md:h-[450px] rounded-3xl overflow-hidden shadow-2xl">
+          <img src="images/Iglesia-Parroquial-de-Santo-Tomas-en-Chichicastenango-1.jpg"
+            class="w-full h-full object-cover transition duration-700 group-hover:scale-110"
+            alt="Iglesia de Santo Tomás">
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-10">
+            <div class="transform transition-transform duration-500">
+              <h3 class="text-white font-lovelo text-2xl md:text-3xl mb-3">Fusión Espiritual</h3>
+              <p class="text-gray-200 text-sm md:text-base leading-relaxed font-light">
+                Las 18 gradas de la Iglesia representan los meses del calendario Maya Solar. Aquí, el catolicismo y la
+                cosmovisión maya coexisten en un mismo altar.
+              </p>
+              <div class="flex items-center gap-2 mt-4 text-umg-sky">
+                <span class="text-xs font-bold uppercase tracking-wider">Ver más sobre el sincretismo</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative group h-[350px] md:h-[450px] rounded-3xl overflow-hidden shadow-2xl">
+          <img src="images/Cofradias-de-Chichicastenango.jpg"
+            class="w-full h-full object-cover transition duration-700 group-hover:scale-110"
+            alt="Incienso y Copal en Chichicastenango">
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-10">
+            <div class="transform transition-transform duration-500">
+              <h3 class="text-white font-lovelo text-2xl md:text-3xl mb-3">Aromas de Devoción</h3>
+              <p class="text-gray-200 text-sm md:text-base leading-relaxed font-light">
+                El humo del copal e incienso eleva las plegarias de los cofrades. Durante la Semana Santa, las
+                procesiones recorren las calles sobre alfombras de aserrín.
+              </p>
+              <div class="flex items-center gap-2 mt-4 text-umg-sky">
+                <span class="text-xs font-bold uppercase tracking-wider">Explorar festividades</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-12 p-6 bg-gray-50 rounded-2xl border-l-4 border-umg-sky italic text-gray-600 text-sm md:text-base">
+        "Chichicastenango no solo se visita, se siente. El misticismo de sus rituales es el motor que mantiene viva la
+        herencia de nuestros antepasados."
+      </div>
+
     </div>
   </section>
 
@@ -217,7 +323,8 @@
               <h2 class="text-[#003366] text-2xl font-light tracking-wide">PON A PRUEBA <span class="font-bold">TU
                   CONOCIMIENTO</span></h2>
             </div>
-            <div id="trivia-chevron" class="transform transition-transform duration-500 text-[#003366]">
+            <div id="trivia-chevron" class="transform transition-transform duration-500 text-[#003366]"
+              style="transform: rotate(180deg);">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -225,14 +332,15 @@
             </div>
           </button>
 
-          <div id="trivia-content" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out bg-white">
+          <div id="trivia-content" class="overflow-hidden transition-all duration-700 ease-in-out bg-white"
+            style="max-height: 1500px;">
             <div class="p-8 space-y-6 text-center border-t border-slate-100">
               <p class="text-slate-600 text-sm leading-relaxed tracking-wide">
                 Tu participación es fundamental para nosotros. Al resolver esta trivia y calificarnos, nos ayudas a
                 seguir mejorando la experiencia y la difusión de nuestra cultura.
               </p>
               <div class="py-4">
-                <a href="pages/trivia.html" target="_blank"
+                <a href="pages/trivia.html"
                   class="inline-block px-10 py-4 bg-[#003366] text-white text-xs font-bold tracking-[0.2em] uppercase rounded-full hover:bg-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
                   Comenzar Trivia y Calificar
                 </a>
@@ -254,7 +362,7 @@
           <button onclick="toggleParticipants()"
             class="w-full flex items-center justify-between p-7 bg-white border-l-8 border-[#003366] hover:bg-slate-50 transition-all duration-300">
             <div class="flex flex-col text-left">
-              <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase">Proyecto</span>
+              <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase">Proyecto Académico</span>
               <h2 class="text-[#003366] text-2xl font-light tracking-wide">GRUPO 5 <span class="font-bold">|
                   INTEGRANTES</span></h2>
             </div>
@@ -271,7 +379,7 @@
               <ul id="lista-nombres" class="space-y-4"></ul>
               <div
                 class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center text-[10px] tracking-[0.2em] text-slate-400 uppercase font-bold">
-                <span>Semana Santa en Guatemala</span>
+                <span>Semana Santa en Chichicastenango</span>
                 <span class="text-blue-600">UMG 2026</span>
               </div>
             </div>
@@ -283,77 +391,94 @@
     <section class="flex justify-center items-center px-6 pb-12">
       <div class="w-full max-w-3xl">
         <div class="relative group shadow-xl rounded-2xl overflow-hidden border border-slate-200">
-          
+
           <button onclick="toggleSection('itinerary-content', 'itinerary-chevron')"
             class="w-full flex items-center justify-between p-7 bg-white border-l-8 border-[#003366] hover:bg-slate-50 transition-all duration-300">
             <div class="flex flex-col text-left">
               <span class="text-blue-600 text-xs font-bold tracking-[0.4em] uppercase">Módulo de Información</span>
-              <h2 class="text-[#003366] text-2xl font-light tracking-wide">ITINERARIO <span class="font-bold text-black">2026</span></h2>
+              <h2 class="text-[#003366] text-2xl font-light tracking-wide">ITINERARIO <span
+                  class="font-bold text-black">2026</span></h2>
             </div>
             <div id="itinerary-chevron" class="transform transition-transform duration-500 text-[#003366]">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </button>
-    
+
           <div id="itinerary-content" class="max-h-0 overflow-hidden transition-all duration-700 ease-in-out">
-            
+
             <div class="hidden md:block p-8 border-t border-slate-100 bg-slate-50">
               <div class="flex justify-center mb-6">
                 <div class="inline-flex bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
-                  <button onclick="switchTabPC('v')" id="btn-v-pc" class="px-8 py-2.5 rounded-xl text-xs font-bold transition-all bg-[#003366] text-white shadow-md">VISOR WEB</button>
-                  <button onclick="switchTabPC('d')" id="btn-d-pc" class="px-8 py-2.5 rounded-xl text-xs font-bold transition-all text-slate-500 hover:text-[#003366]">DESCARGAR / QR</button>
+                  <button onclick="switchTabPC('v')" id="btn-v-pc"
+                    class="px-8 py-2.5 rounded-xl text-xs font-bold transition-all bg-[#003366] text-white shadow-md">VISOR
+                    WEB</button>
+                  <button onclick="switchTabPC('d')" id="btn-d-pc"
+                    class="px-8 py-2.5 rounded-xl text-xs font-bold transition-all text-slate-500 hover:text-[#003366]">DESCARGAR
+                    / QR</button>
                 </div>
               </div>
-    
+
               <div class="relative h-[650px] bg-white rounded-2xl overflow-hidden border border-slate-200">
-                 <div id="pc-viewer" class="absolute inset-0 opacity-100 z-10 transition-opacity duration-500">
-                    <embed src="docs/4HIti64pV_nera1ab624friof1403f7af.pdf" type="application/pdf" width="100%" height="100%">
-                 </div>
-                 <div id="pc-download" class="absolute inset-0 opacity-0 z-0 transition-opacity duration-500 flex flex-col items-center justify-center bg-white text-center">
-                    <img src="images/QR_1-1024.png" alt="QR" class="w-52 h-52 mb-6 p-2 border border-slate-100 rounded-xl shadow-sm">
-                    <p class="text-[#003366] font-bold tracking-wide">ESCANEA PARA LLEVAR EN TU MÓVIL</p>
-                    <a href="docs/4HIti64pV_nera1ab624friof1403f7af.pdf" download class="mt-4 text-sm text-blue-600 font-medium underline hover:text-blue-800">O haz clic aquí para descargar directo</a>
-                 </div>
+                <div id="pc-viewer" class="absolute inset-0 opacity-100 z-10 transition-opacity duration-500">
+                  <embed src="docs/4HIti64pV_nera1ab624friof1403f7af.pdf" type="application/pdf" width="100%"
+                    height="100%">
+                </div>
+                <div id="pc-download"
+                  class="absolute inset-0 opacity-0 z-0 transition-opacity duration-500 flex flex-col items-center justify-center bg-white text-center">
+                  <img src="images/QR_1-1024.png" alt="QR"
+                    class="w-52 h-52 mb-6 p-2 border border-slate-100 rounded-xl shadow-sm">
+                  <p class="text-[#003366] font-bold tracking-wide">ESCANEA PARA LLEVAR EN TU MÓVIL</p>
+                  <a href="docs/4HIti64pV_nera1ab624friof1403f7af.pdf" download
+                    class="mt-4 text-sm text-blue-600 font-medium underline hover:text-blue-800">O haz clic aquí para
+                    descargar directo</a>
+                </div>
               </div>
             </div>
-    
+
             <div class="md:hidden p-6 border-t border-slate-100 flex flex-col items-center text-center bg-white">
-              <div class="bg-blue-600 text-white text-[10px] px-4 py-1.5 rounded-full font-bold mb-4 tracking-widest animate-pulse">
+              <div
+                class="bg-blue-600 text-white text-[10px] px-4 py-1.5 rounded-full font-bold mb-4 tracking-widest animate-pulse">
                 ACCESO MÓVIL ACTIVADO
               </div>
-              <h3 class="text-[#003366] font-black text-lg leading-tight mb-2 uppercase">Guía Digital de<br>Procesiones</h3>
-              <p class="text-slate-500 text-xs mb-6 px-4 font-light">Para una mejor experiencia en tu recorrido por Antigua, descarga el itinerario en formato PDF.</p>
-    
+              <h3 class="text-[#003366] font-black text-lg leading-tight mb-2 uppercase">Guía Digital de<br>Actividades
+              </h3>
+              <p class="text-slate-500 text-xs mb-6 px-4 font-light">Para una mejor experiencia en tu recorrido por
+                Chichicastenango, descarga el itinerario en formato PDF.</p>
+
               <div class="relative p-6 bg-slate-50 rounded-3xl border border-slate-100 mb-8 shadow-inner">
                 <img src="images/QR_1-1024.png" alt="QR" class="w-48 h-48 mx-auto">
               </div>
-    
-              <a href="docs/4HIti64pV_nera1ab624friof1403f7af.pdf" 
-                 class="w-full bg-[#003366] text-white py-5 rounded-2xl font-bold shadow-xl flex items-center justify-center space-x-3 active:scale-95 transition-transform">
+
+              <a href="docs/4HIti64pV_nera1ab624friof1403f7af.pdf" download
+                class="w-full bg-[#003366] text-white py-5 rounded-2xl font-bold shadow-xl flex items-center justify-center space-x-3 active:scale-95 transition-transform">
                 <span>OBTENER ITINERARIO (PDF)</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  <path fill-rule="evenodd"
+                    d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
                 </svg>
               </a>
-              <p class="mt-4 text-[10px] text-slate-400 font-medium uppercase tracking-tighter italic">Versión optimizada para visitantes</p>
+              <p class="mt-4 text-[10px] text-slate-400 font-medium uppercase tracking-tighter italic">Versión
+                optimizada para visitantes</p>
             </div>
-    
+
           </div>
         </div>
       </div>
     </section>
-
   </div>
 
   <footer class="bg-white border-t border-gray-200 pt-16 pb-10 font-sans">
     <div class="max-w-6xl mx-auto px-8">
-      
-      <div class="flex flex-col md:flex-row justify-between items-center mb-12 space-y-8 md:space-y-0 text-center md:text-left">
+
+      <div
+        class="flex flex-col md:flex-row justify-between items-center mb-12 space-y-8 md:space-y-0 text-center md:text-left">
         <div class="flex flex-col items-center md:items-start md:flex-row md:space-x-6">
           <div class="p-3 bg-white rounded-2xl shadow-sm border border-gray-100 mb-4 md:mb-0">
-            <img src="https://umg.edu.gt/img/Umg.png" alt="UMG Logo" class="h-20 w-auto">
+            <img src="images/Umg.png" alt="UMG Logo" class="h-20 w-auto">
           </div>
           <div>
             <h3 class="text-[#003366] font-bold text-xl tracking-tight">UNIVERSIDAD MARIANO GÁLVEZ</h3>
@@ -361,15 +486,16 @@
             <p class="text-gray-400 text-[10px] uppercase font-medium">Sacatepéquez, Guatemala</p>
           </div>
         </div>
-  
+
         <div class="hidden lg:block h-16 w-[1px] bg-gray-100"></div>
-  
+
         <div class="text-center md:text-left">
           <span class="block text-gray-400 text-[9px] uppercase tracking-widest mb-1 font-bold">Facultad de</span>
           <h4 class="text-gray-700 font-semibold text-sm tracking-wide uppercase">Hotelería, Turismo y Gastronomía</h4>
-          <p class="text-blue-700 text-[10px] font-bold mt-1 tracking-widest uppercase italic">Excelencia en el Servicio</p>
+          <p class="text-blue-700 text-[10px] font-bold mt-1 tracking-widest uppercase italic">Excelencia en el Servicio
+          </p>
         </div>
-  
+
         <div class="flex flex-col items-center md:items-end">
           <div class="flex items-center space-x-3 mb-2">
             <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
@@ -378,93 +504,105 @@
           <p class="text-gray-400 text-[10px] uppercase tracking-[0.2em] font-bold">Proyecto Semana Santa | Grupo 5</p>
         </div>
       </div>
-  
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-        
+
         <div class="bg-white border-b md:border-b-0 md:border-r border-gray-100">
-          <button onclick="toggleFooterMobile('f-tematica')" class="w-full p-6 md:p-8 md:cursor-default flex justify-between items-center md:block focus:outline-none">
-            <span class="block text-[#003366] text-[10px] font-black uppercase tracking-widest md:mb-2">Temática Principal</span>
-            <svg id="icon-f-tematica" class="h-4 w-4 text-blue-600 md:hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button onclick="toggleFooterMobile('f-tematica')"
+            class="w-full p-6 md:p-8 md:cursor-default flex justify-between items-center md:block focus:outline-none">
+            <span class="block text-[#003366] text-[10px] font-black uppercase tracking-widest md:mb-2">Temática
+              Principal</span>
+            <svg id="icon-f-tematica" class="h-4 w-4 text-blue-600 md:hidden transition-transform duration-300"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <div id="f-tematica" class="max-h-0 md:max-h-full overflow-hidden transition-all duration-500 ease-in-out text-center md:pb-8 px-8">
-            <p class="text-gray-600 text-xs font-medium uppercase tracking-wider pb-6 md:pb-0">Tradiciones y Turismo Religioso</p>
+          <div id="f-tematica"
+            class="max-h-0 md:max-h-full overflow-hidden transition-all duration-500 ease-in-out text-center md:pb-8 px-8">
+            <p class="text-gray-600 text-xs font-medium uppercase tracking-wider pb-6 md:pb-0">Tradiciones y Turismo
+              Religioso</p>
           </div>
         </div>
-  
+
         <div class="bg-gray-50/50">
-          <button onclick="toggleFooterMobile('f-sede')" class="w-full p-6 md:p-8 md:cursor-default flex justify-between items-center md:block focus:outline-none">
-            <span class="block text-[#003366] text-[10px] font-black uppercase tracking-widest md:mb-2">Sede Académica</span>
-            <svg id="icon-f-sede" class="h-4 w-4 text-blue-600 md:hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button onclick="toggleFooterMobile('f-sede')"
+            class="w-full p-6 md:p-8 md:cursor-default flex justify-between items-center md:block focus:outline-none">
+            <span class="block text-[#003366] text-[10px] font-black uppercase tracking-widest md:mb-2">Sede
+              Académica</span>
+            <svg id="icon-f-sede" class="h-4 w-4 text-blue-600 md:hidden transition-transform duration-300" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <div id="f-sede" class="max-h-0 md:max-h-full overflow-hidden transition-all duration-500 ease-in-out text-center md:pb-8 px-8">
-            <p class="text-gray-600 text-xs font-medium uppercase tracking-wider pb-6 md:pb-0">Campus Antigua Guatemala</p>
+          <div id="f-sede"
+            class="max-h-0 md:max-h-full overflow-hidden transition-all duration-500 ease-in-out text-center md:pb-8 px-8">
+            <p class="text-gray-600 text-xs font-medium uppercase tracking-wider pb-6 md:pb-0">Campus Antigua Guatemala
+            </p>
           </div>
         </div>
-  
+
       </div>
-  
-      <div class="mt-10 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-400 tracking-[0.3em] uppercase font-bold text-center md:text-left">
+
+      <div
+        class="mt-10 flex flex-col md:flex-row justify-between items-center text-[9px] text-gray-400 tracking-[0.3em] uppercase font-bold text-center md:text-left">
         <p>&copy; 2026 Universidad Mariano Gálvez - Facultad de Turismo</p>
         <div class="mt-4 md:mt-0">
-          <span class="text-blue-600/60 italic tracking-normal normal-case font-medium">"Conoceréis la verdad y la verdad os hará libres"</span>
+          <span class="text-blue-600/60 italic tracking-normal normal-case font-medium">"Conoceréis la verdad y la
+            verdad os hará libres"</span>
         </div>
       </div>
-  
+
     </div>
   </footer>
-  
+
+  <!-- FOOTER RESPONSIVE  -->
   <script>
     function toggleFooterMobile(id) {
-      // Esta función solo responde si el ancho de pantalla es de móvil
       if (window.innerWidth < 768) {
         const content = document.getElementById(id);
         const icon = document.getElementById('icon-' + id);
-        
-        // Cerramos la otra sección para mantener la limpieza
+
         const sections = ['f-tematica', 'f-sede'];
         sections.forEach(s => {
           if (s !== id) {
             document.getElementById(s).style.maxHeight = "0px";
             const otherIcon = document.getElementById('icon-' + s);
-            if(otherIcon) otherIcon.style.transform = "rotate(0deg)";
+            if (otherIcon) otherIcon.style.transform = "rotate(0deg)";
           }
         });
-  
+
         if (content.style.maxHeight && content.style.maxHeight !== "0px") {
           content.style.maxHeight = "0px";
           icon.style.transform = "rotate(0deg)";
         } else {
-          content.style.maxHeight = "100px"; // Ajuste para el texto de turismo
+          content.style.maxHeight = "100px";
           icon.style.transform = "rotate(180deg)";
         }
       }
     }
   </script>
-  <!-- ITINERARIO  -->
+  <!-- ITINERARIO Y TRIVIA -->
   <script>
     function toggleSection(contentId, chevronId) {
       const content = document.getElementById(contentId);
       const chevron = document.getElementById(chevronId);
+
       if (content.style.maxHeight && content.style.maxHeight !== "0px") {
         content.style.maxHeight = "0px";
         chevron.style.transform = "rotate(0deg)";
       } else {
-        // Un valor alto (1500px) permite que el visor de PC quepa perfectamente
         content.style.maxHeight = "1500px";
         chevron.style.transform = "rotate(180deg)";
       }
     }
-  
+
+    // ITINERARIO PC Y MOVIL MODO VISTA 
     function switchTabPC(tab) {
       const v = document.getElementById('pc-viewer');
       const d = document.getElementById('pc-download');
       const btnV = document.getElementById('btn-v-pc');
       const btnD = document.getElementById('btn-d-pc');
-  
+
       if (tab === 'v') {
         v.classList.replace('opacity-0', 'opacity-100'); v.style.zIndex = "10";
         d.classList.replace('opacity-100', 'opacity-0'); d.style.zIndex = "0";
@@ -478,7 +616,7 @@
       }
     }
   </script>
-  <!-- INTEGRANTES  -->
+  <!-- LISTADO DEL GRUPO  -->
   <script>
     const nombres = [
       "NATASHA LOURDES LÓPEZ MENA",
@@ -524,26 +662,24 @@
       }
     }
   </script>
-  <!-- PANTALLA DE CARGA  -->
+  <!-- PANTALLA DE CARGA Y HEADER MOBIL -->
   <script>
     const splash = document.getElementById('splash-screen');
     const splashGroup = document.getElementById('splash-group');
 
     window.addEventListener('DOMContentLoaded', () => {
-      if (splashGroup) setTimeout(() => splashGroup.classList.add('show'), 500);
-      if (splashGroup) setTimeout(() => splashGroup.classList.remove('show'), 3000);
+      if (splashGroup) setTimeout(() => splashGroup.classList.add('scale-110', 'transition-transform', 'duration-1000'), 100);
       setTimeout(() => {
         if (splash) {
           splash.style.opacity = '0';
           setTimeout(() => {
             splash.remove();
             document.body.classList.remove('overflow-hidden');
-          }, 800);
+          }, 700);
         }
-      }, 3500);
+      }, 2500);
     });
 
-    // Lógica de Pendones
     const p1 = document.getElementById('p1');
     const p2 = document.getElementById('p2');
     let pState = true;
@@ -555,7 +691,6 @@
       }, 6000);
     }
 
-    // Menú Móvil
     const btnM = document.getElementById('btn-mobile');
     const closeM = document.getElementById('close-mobile');
     const menuM = document.getElementById('mobile-menu');
@@ -564,6 +699,41 @@
     if (btnM) btnM.onclick = () => menuM.classList.remove('translate-x-full');
     if (closeM) closeM.onclick = () => menuM.classList.add('translate-x-full');
     mLinks.forEach(l => l.onclick = () => menuM.classList.add('translate-x-full'));
+
+    // FUNCION INNECESARIA PARA RECARGAR LA WEB CON EL LOGO PERO NO QUIERO MODIFICAR EL DISÑEO POR ESTE DETALLE DE ENLACE DE RIDERECCION
+    document.querySelector('.reload').addEventListener('click', () => {
+      window.location.reload();
+    })
+
+    const header = document.getElementById('main-header');
+    const pendon = document.getElementById('pendon-trigger');
+    let lastScrollY = window.scrollY;
+    let isMouseOverHeader = false;
+
+    header.addEventListener('mouseenter', () => { isMouseOverHeader = true; header.classList.remove('-translate-y-full'); });
+    header.addEventListener('mouseleave', () => { isMouseOverHeader = false; });
+
+    pendon.addEventListener('mouseenter', () => {
+      header.classList.remove('-translate-y-full');
+    });
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 50) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+
+      if (currentScrollY > lastScrollY && currentScrollY > 200 && !isMouseOverHeader) {
+        header.classList.add('-translate-y-full');
+      } else {
+        header.classList.remove('-translate-y-full');
+      }
+
+      lastScrollY = currentScrollY;
+    });
   </script>
 </body>
 
